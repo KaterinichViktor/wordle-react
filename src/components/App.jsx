@@ -1,16 +1,27 @@
-export const App = () => {
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import GuessNumber from './GuessNumber';
+import WordleClassic from './WordleClassic';
+import WordleHard from './WordleHard';
+
+
+
+const App = () => {
+
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/wordle-classic" element={<WordleClassic />} />
+        <Route path="/wordle-hard" element={<WordleHard />} />
+        <Route path="/guess-my-number" element={<GuessNumber />} />
+      </Routes>
+    </Router>
   );
 };
+
+export default App;
+
