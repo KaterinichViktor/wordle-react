@@ -17,7 +17,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/wordle-classic" element={<WordleClassic />} />
         <Route path="/wordle-hard" element={<WordleHard />} />
-        <Route path="/guess-my-number" element={<GuessNumber />} />
+        <Route path="/guess-my-code" element={<GuessNumber />} />
       </Routes>
     </Router>
   );
