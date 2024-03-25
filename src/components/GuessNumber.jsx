@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function GuessCode() {
   const [currentRow, setCurrentRow] = useState(0);
   const [hiddenInput, setHiddenInput] = useState('');
-  const [grid, setGrid] = useState([Array.from({ length: 4 }, () => '')]);
+  const [grid, setGrid] = useState([Array.from({ length: 4 }, () => ({ content: '', backgroundColor: 'white' }))]);
   const [correctAmounts, setCorrectAmounts] = useState([0]);
   const inputRef = useRef(null);
   const random4 = 1234; // Temporary random number for testing
@@ -29,8 +29,10 @@ function GuessCode() {
     setCorrectAmounts((prevAmounts) => [...prevAmounts.slice(0, currentRow), correctAmount]);
     clearInput();
     if (correctAmount === 4) {
-      toast.success('You`ve cracked the code! Congratulations!', { autoClose: false });
-      // colorCellsGreen();
+      colorCellsGreen();
+      setTimeout(() => {
+        toast.success('You`ve cracked the code! Congratulations!', { autoClose: 1000 });
+      }, 750);
     } else {
       switchToNextRow();
     }
@@ -40,7 +42,7 @@ function GuessCode() {
     setGrid((prevGrid) => {
       const newRow = [...prevGrid[currentRow]];
       for (let i = 0; i < 4; i++) {
-        newRow[i] = input[i] || '';
+        newRow[i] = { content: input[i] || '', backgroundColor: 'white' };
       }
       const newGrid = [...prevGrid];
       newGrid[currentRow] = newRow;
@@ -56,7 +58,7 @@ function GuessCode() {
   const switchToNextRow = () => {
     setCurrentRow((prevRow) => (prevRow + 1) % 10);
     if (currentRow < 20) {
-      setGrid((prevGrid) => [...prevGrid, Array.from({ length: 4 }, () => '')]);
+      setGrid((prevGrid) => [...prevGrid, Array.from({ length: 4 }, () => ({ content: '', backgroundColor: 'white' }))]);
       setCorrectAmounts((prevAmounts) => [...prevAmounts, 0]);
     }
   };
@@ -71,18 +73,18 @@ function GuessCode() {
     return correctAmnt;
   };
 
-  // const colorCellsGreen = () => {
-  //   const greenCells = [0, 1, 2, 3];
-  //   greenCells.forEach((index, i) => {
-  //     setTimeout(() => {
-  //       setGrid((prevGrid) => {
-  //         const newGrid = [...prevGrid];
-  //         newGrid[currentRow][index] = 'green';
-  //         return newGrid;
-  //       });
-  //     }, 500 * (i + 1));
-  //   });
-  // };
+  const colorCellsGreen = () => {
+    const greenCells = [0, 1, 2, 3];
+    greenCells.forEach((index, i) => {
+      setTimeout(() => {
+        setGrid((prevGrid) => {
+          const newGrid = [...prevGrid];
+          newGrid[currentRow][index].backgroundColor = 'green';
+          return newGrid;
+        });
+      }, 150 * (i + 1));
+    });
+  };
 
   return (
     <div style={{ display: 'flex' }}>
@@ -111,9 +113,9 @@ function GuessCode() {
 
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="row" style={{ display: 'flex', justifyContent: 'center' }}>
-            {row.map((cellContent, cellIndex) => (
-              <div key={cellIndex} className={`cell`} style={{ width: '30px', height: '30px', border: '1px solid black', textAlign: 'center', lineHeight: '30px', marginBottom: '10px' }}>
-                {cellContent}
+            {row.map(({ content, backgroundColor }, cellIndex) => (
+              <div key={cellIndex} className={`cell`} style={{ width: '30px', height: '30px', border: '1px solid black', textAlign: 'center', lineHeight: '30px', marginBottom: '10px', backgroundColor: backgroundColor }}>
+                {content}
               </div>
             ))}
           </div>
@@ -130,11 +132,3 @@ function GuessCode() {
 }
 
 export default GuessCode;
-
-
-
-
-
-
-
-
