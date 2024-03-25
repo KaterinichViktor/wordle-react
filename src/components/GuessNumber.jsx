@@ -18,6 +18,7 @@ function GuessCode() {
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (hiddenInput.length !== 4) {
@@ -27,7 +28,12 @@ function GuessCode() {
     const correctAmount = getCorrectAmount(hiddenInput);
     setCorrectAmounts((prevAmounts) => [...prevAmounts.slice(0, currentRow), correctAmount]);
     clearInput();
-    switchToNextRow();
+    if (correctAmount === 4) {
+      toast.success('You`ve cracked the code! Congratulations!', { autoClose: false });
+      // colorCellsGreen();
+    } else {
+      switchToNextRow();
+    }
   };
 
   const updateCells = (input) => {
@@ -64,6 +70,19 @@ function GuessCode() {
     }
     return correctAmnt;
   };
+
+  // const colorCellsGreen = () => {
+  //   const greenCells = [0, 1, 2, 3];
+  //   greenCells.forEach((index, i) => {
+  //     setTimeout(() => {
+  //       setGrid((prevGrid) => {
+  //         const newGrid = [...prevGrid];
+  //         newGrid[currentRow][index] = 'green';
+  //         return newGrid;
+  //       });
+  //     }, 500 * (i + 1));
+  //   });
+  // };
 
   return (
     <div style={{ display: 'flex' }}>
