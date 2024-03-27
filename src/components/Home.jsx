@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-
 const Home = () => {
 return (
 <div className='homepage'>
@@ -10,7 +9,7 @@ return (
 
     <Link to="/wordle-classic" className='wordle-link'>
         <div className='gameThumbnail'>
-            <img src="" alt="wordle" />
+            <img src="../images/wordle.jpg" alt="wordle" />
         </div>
     </Link>
     <Link to="/wordle-hard" className='wordle-hard-link'>

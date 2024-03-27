@@ -1,0 +1,23 @@
+.top-panel{
+    display: flex;
+    border-bottom: 1px solid black;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 20px 0;
+    position: relative;
+  }
+  .icon-home{
+    width: 40px;
+    height: 40px;
+  }
+  .game-title{
+    font-size: 50px;
+  }
+  .logo-link{
+    position: absolute;
+    top: auto;
+    left: 0;
+    width: 40px;
+    height: 40px;
+  }

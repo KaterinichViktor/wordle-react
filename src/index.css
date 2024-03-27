@@ -10,15 +10,23 @@ body {
 }
 *{
   box-sizing: border-box;
+  margin: 0;
 }
-.modal {
+
+@import url(css/wordle.css);
+@import url(css/wordle-hard.css);
+@import url(css/top-panel.css);
+@import url(css/crack-the-code.css);
+
+
+/* .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.)
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -29,158 +37,8 @@ code {
   display: flex;
 }
 
-/* .cell {
-  width: 60px;
-  height: 60px;
-  border: 2px solid #D3D6DA;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  font-weight: 700;
-  background-color: #FBFCFF;
-  color: #393E4C;
-  margin: 0 5px 5px 0;
-} */
 
 
-/* @keyframes flipAnimation {
-  0% { transform: rotateX(0); }
-  40% { transform: rotateX(90deg); }
-  100% { transform: rotateX(180deg); }
-} */
-
-
-
-/* .cell.flipped-green {
-  background-color: rgba(3, 180, 3, 0.87);
-  border: none;
-  transform: rotateX(180deg);
-  color: white;
-}
-.cell.flipped-yellow {
-  background-color: rgb(255, 208, 0);
-  border: none;
-  transform: rotateX(180deg);
-  color: white;
-}
-.cell.flipped-red {
-  background-color: #A4AEC4;
-  border: none;
-  transform: rotateX(180deg);
-  color: white;
-} */
-
-.active{
-  border: 2px solid #A7ADC0;
-  animation: scaleAnimation 0.2s ease forwards;
-}
-
-@keyframes scaleAnimation {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-.hdn-input{
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  clip-path:inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-}
-
-.cell {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  font-weight: 600;
-  background-color: #FBFCFF;
-  color: #393E4C;
-  margin: 0 5px 5px 0;
-  perspective: 1000px;
-}
-
-.cell-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-.cell.flipped-green .cell-inner,
-.cell.flipped-yellow .cell-inner,
-.cell.flipped-red .cell-inner {
-  transform: rotateX(180deg);
-}
-
-.cell-front, .cell-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.cell-front {
-  background-color: #FBFCFF;
-  color: #393E4C;
-  border: 2px solid #D3D6DA;
-}
-
-.cell-back {
-  color: white;
-  transform: rotateX(180deg);
-}
-
-.cell-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  font-weight: 600;
-}
-
-/* Additional styling based on cell state */
-.cell.flipped-green .cell-back {
-  background-color: rgba(3, 180, 3, 0.87);
-}
-
-.cell.flipped-yellow .cell-back {
-  background-color: rgb(255, 208, 0);
-}
-
-.cell.flipped-red .cell-back {
-  background-color: #A4AEC4;
-}
-
-/* Border for active cells */
-.cell.active .cell-front {
-  border: #A7ADC0; /* Border on front side for active cell */
-}
-
-.cell.active .cell-back {
-  border: none; /* Remove border on back side for active cell */
-}
-
-@keyframes scaleAnimation {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
 
 
 

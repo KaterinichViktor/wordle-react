@@ -1,0 +1,140 @@
+.hdn-input-code{
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path:inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+
+  .cell-code{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    font-weight: 600;
+    /* border: 2px solid #D3D6DA; */
+    background-color: #FBFCFF;
+    color: #393E4C;
+    margin: 0 5px 5px 0;
+    perspective: 1000px;
+  }
+  
+  .cell-code-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .cell-code.all-right .cell-code-inner {
+    transform: rotateX(180deg);
+  }
+  
+  .cell-code-front, .cell-code-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .cell-code-front {
+    background-color: #FBFCFF;
+    color: #393E4C;
+    border: 2px solid #D3D6DA;
+  }
+  
+  .cell-code-back {
+    color: white;
+    transform: rotateX(180deg);
+  }
+  
+  .cell-code-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  
+  /* Additional styling based on cell state */
+  .cell-code.all-right .cell-code-back {
+    background-color: rgba(3, 180, 3, 0.87);
+  }
+  
+  /* Border for active cells */
+  .cell-code.active .cell-code-front {
+    border: #A7ADC0; /* Border on front side for active cell */
+  }
+  
+  .cell-code.active .cell-code-back {
+    border: none; /* Remove border on back side for active cell */
+  }
+  
+  @keyframes scaleAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .active{
+    border: 2px solid #A7ADC0;
+    animation: scaleAnimation 0.2s ease forwards;
+  }
+
+  .crack-code-container{
+    display: flex;
+  }
+  .code-box{
+    width: 800px;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .correct-number-box{
+    margin: 0 10px 5px 0;
+    padding: 5px;
+    border: 2px solid #D3D6DA;
+    height: 60px;
+    width: 200px;
+    background-color: #FBFCFF;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .zero-right{
+    color: rgb(230, 27, 0);
+  }
+  .one-right{
+    color: rgb(255, 145, 0);
+  }
+  .two-right{
+    color: rgb(255, 217, 0);
+  }
+  .three-right{
+    color: rgb(158, 226, 0);
+  }
+  .four-right{
+    color: rgba(3, 180, 3, 0.87);
+  }
+  .default-right{
+    color: rgb(0, 0, 0);
+  }

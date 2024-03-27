@@ -1,0 +1,129 @@
+
+.active{
+    border: 2px solid #A7ADC0;
+    animation: scaleAnimation 0.2s ease forwards;
+  }
+  
+  @keyframes scaleAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .hdn-input-wordle{
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path:inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+  
+  .cell-wordle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    font-weight: 600;
+    background-color: #FBFCFF;
+    color: #393E4C;
+    margin: 0 5px 5px 0;
+    perspective: 1000px;
+  }
+  
+  .cell-wordle-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .cell-wordle.flipped-green .cell-wordle-inner,
+  .cell-wordle.flipped-yellow .cell-wordle-inner,
+  .cell-wordle.flipped-red .cell-wordle-inner {
+    transform: rotateX(180deg);
+  }
+  
+  .cell-wordle-front, .cell-wordle-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .cell-wordle-front {
+    background-color: #FBFCFF;
+    color: #393E4C;
+    border: 2px solid #D3D6DA;
+  }
+  
+  .cell-wordle-back {
+    color: white;
+    transform: rotateX(180deg);
+  }
+  
+  .cell-wordle-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  
+  /* Additional styling based on cell state */
+  .cell-wordle.flipped-green .cell-wordle-back {
+    background-color: rgba(3, 180, 3, 0.87);
+  }
+  
+  .cell-wordle.flipped-yellow .cell-wordle-back {
+    background-color: rgb(255, 208, 0);
+  }
+  
+  .cell-wordle.flipped-red .cell-wordle-back {
+    background-color: #A4AEC4;
+  }
+  
+  /* Border for active cells */
+  .cell-wordle.active .cell-wordle-front {
+    border: #A7ADC0; /* Border on front side for active cell */
+  }
+  
+  .cell-wordle.active .cell-wordle-back {
+    border: none; /* Remove border on back side for active cell */
+  }
+  
+  @keyframes scaleAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .wordle-box{
+    width: 800px;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+  
+  }
