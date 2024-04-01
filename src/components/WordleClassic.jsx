@@ -151,7 +151,7 @@ function WordleGame() {
     //   // Prevent the input from losing focus if the game is not won
     //   inputRef.current.focus();
     // }
-    if (!correct===5) {
+    if (!correctRef.current===5) {
       // Prevent the input from losing focus if the game is not won
       inputRef.current.focus();
     }

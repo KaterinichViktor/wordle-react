@@ -13,6 +13,7 @@ function GuessCode() {
   const inputRef = useRef(null);
   const random4 = 1234; // Temporary random number for testing
 
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value.replace(/\D/g, '').slice(0, 4);
     setHiddenInput(inputValue);
@@ -62,13 +63,6 @@ function GuessCode() {
     // inputRef.current.focus();
   };
 
-  // const switchToNextRow = () => {
-  //   setCurrentRow((prevRow) => (prevRow + 1) % 10);
-  //   if (currentRow < 10 && correctAmounts !== 4 ) {
-  //     setGrid((prevGrid) => [...prevGrid, Array.from({ length: 4 }, () => ({ content: '', state: '' }))]);
-  //     setCorrectAmounts((prevAmounts) => [...prevAmounts, 0]);
-  //   } 
-  // };
   const switchToNextRow = () => {
     setCurrentRow((prevRow) => prevRow + 1);
     if (currentRow === 9 && correctAmounts[currentRow] !== 4) {
@@ -77,8 +71,14 @@ function GuessCode() {
         toast.error('You failed! Better luck next time.', { autoClose: 1000 });
       }, 750);
     } else if (currentRow < 10 && correctAmounts[currentRow] !== 4) {
-      setGrid((prevGrid) => [...prevGrid, Array.from({ length: 4 }, () => ({ content: '', state: '' }))]);
-      setCorrectAmounts((prevAmounts) => [...prevAmounts, 0]);
+      setGrid((prevGrid) => [...prevGrid, Array.from({ length: 4 }, () => ({ content: '', state: 'invis' }))]);
+
+      makeCellsVisible();
+
+      setTimeout(() => {
+        setCorrectAmounts((prevAmounts) => [...prevAmounts, 0]);
+      }, 750);
+      
     }
   };
   
@@ -100,6 +100,19 @@ function GuessCode() {
         setGrid((prevGrid) => {
           const newGrid = [...prevGrid];
           newGrid[currentRow][index].state = 'all-right';
+          return newGrid;
+        });
+      }, 150 * (i + 1));
+    });
+  };
+
+  const makeCellsVisible = () => {
+    const invisCells = [0, 1, 2, 3];
+    invisCells.forEach((index, i) => {
+      setTimeout(() => {
+        setGrid((prevGrid) => {
+          const newGrid = [...prevGrid];
+          newGrid[currentRow + 1][index].state = '';
           return newGrid;
         });
       }, 150 * (i + 1));
@@ -129,8 +142,6 @@ function GuessCode() {
     }
   };
   
-
-
   return (
     <div className='code-box'>
       <TopCode/>
@@ -176,9 +187,6 @@ function GuessCode() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* {correctAmounts.map((amount, index) => (
-            <div className='correct-number-box' key={index} > <h2 className={`correct-number ${colorShow}`}>{amount}</h2> correct digits</div>
-          ))} */}
           {correctAmounts.map((amount, index) => (
             <div className='correct-number-box' key={index}>
               <h2 className={`correct-number ${getCorrectClass(amount)}`}>{amount}</h2> correct digits
@@ -193,3 +201,7 @@ function GuessCode() {
 }
 
 export default GuessCode;
+
+
+
+

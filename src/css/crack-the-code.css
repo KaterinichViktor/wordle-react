@@ -119,6 +119,9 @@
     align-items: center;
     justify-content: space-evenly;
   }
+  .correct-number-box.invis{
+    opacity: 0;
+  }
 
   .zero-right{
     color: rgb(230, 27, 0);
@@ -138,3 +141,11 @@
   .default-right{
     color: rgb(0, 0, 0);
   }
+
+
+
+  /* Add this to your CSS file */
+.cell-code.invis {
+  opacity: 0;
+  /* transition: opacity 0.3s ease; */
+}
