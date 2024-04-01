@@ -12,7 +12,7 @@ const App = () => {
 
 
   return (
-    <Router>
+    <Router basename="/wordle-react">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/wordle-classic" element={<WordleClassic />} />

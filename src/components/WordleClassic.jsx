@@ -15,7 +15,7 @@ function WordleGame() {
   const [hiddenInput, setHiddenInput] = useState('');
   const [grid, setGrid] = useState(Array.from({ length: 6 }, () => Array.from({ length: 5 }, () => ({ content: '', state: '' }))));
   // const [gameWon, setGameWon] = useState(false);
-  let correct = 0;
+  // let correct = 0;
 
   const correctRef = useRef(0);
 
@@ -38,15 +38,15 @@ function WordleGame() {
       console.log('Word not found in dictionary.');
       return;
     }
-    updateCellColors(hiddenInput);
+    updateCellColors(hiddenInput, correctRef);
     switchToNextRow();
     clearInput();
     
     // Unfocus the input field when the game is won
-    if (correct === 5) {
-      toast.success('Congratulations! You won!');
-      inputRef.current.blur();
-    }
+    // if (correct === 5) {
+    //   toast.success('Congratulations! You won!');
+    //   inputRef.current.blur();
+    // }
   };
   
 
@@ -104,7 +104,7 @@ function WordleGame() {
   
         if (dailyWord[i] === char) {
           cell.state = 'flipped-green'; // Correct letter in the correct position
-          correctRef.current++; // Increment correct count
+          correctRef.current++; // Increment correct count using correctRef.current
         } else if (dailyWord.includes(char)) {
           cell.state = 'flipped-yellow'; // Correct letter in the wrong position
         } else {
