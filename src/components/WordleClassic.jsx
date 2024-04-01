@@ -7,7 +7,7 @@ import { TopWordle } from './TopPanel';
 
 // const dailyWord = getRandomWord().toUpperCase();
 const dailyWord = "Apple".toUpperCase();
-let correct = 0;
+// let correct = 0;
 
 
 function WordleGame() {
@@ -17,9 +17,12 @@ function WordleGame() {
   // const [gameWon, setGameWon] = useState(false);
   let correct = 0;
 
+  const correctRef = useRef(0);
+
   useEffect(() => {
-    correct = 0;
-  }, [currentRow]);
+    correctRef.current = 0; // Reset correctRef to 0 when a new game starts
+  }, [currentRow]); // Reset correctRef whenever currentRow changes
+  
 
   const inputRef = useRef(null);
 
@@ -57,17 +60,51 @@ function WordleGame() {
     }
   };
   
-  const updateCellColors = (word) => {
+  // const updateCellColors = (word) => {
+  //   const gridCopy = [...grid];
+  //   for (let i = 0; i < word.length; i++) {
+  //     setTimeout(() => {
+  //       const char = word[i];
+  //       const cell = gridCopy[currentRow][i];
+  //       // let correct = 0;
+        
+  //       if (dailyWord[i] === char) {
+  //         cell.state = 'flipped-green'; // Correct letter in the correct position
+  //         correct++;
+  //       } else if (dailyWord.includes(char)) {
+  //         cell.state = 'flipped-yellow'; // Correct letter in the wrong position
+  //       } else {
+  //         cell.state = 'flipped-red'; // Incorrect letter
+  //       }
+  //       setGrid([...gridCopy]); // Update the grid after coloring each cell
+  
+  //       // Check if all cells in the current row have correct letters
+  //       // const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
+  //       const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
+  //       if (allCorrect) {
+  //         // setGameWon(true); // Set gameWon to true if all letters are correct
+  //         toast.success('Congratulations! You won!');
+  //         inputRef.current.blur();
+  //       }
+  //       // if (correct===5) {
+  //       //   // setGameWon(true); // Set gameWon to true if all letters are correct
+  //       //   toast.success('Congratulations! You won!');
+  //       //   inputRef.current.blur();
+  //       // }
+  //     }, 150 * (i + 1));
+  //   }
+  // };
+
+  const updateCellColors = (word, correctRef) => {
     const gridCopy = [...grid];
     for (let i = 0; i < word.length; i++) {
       setTimeout(() => {
         const char = word[i];
         const cell = gridCopy[currentRow][i];
-        // let correct = 0;
-        
+  
         if (dailyWord[i] === char) {
           cell.state = 'flipped-green'; // Correct letter in the correct position
-          correct++;
+          correctRef.current++; // Increment correct count
         } else if (dailyWord.includes(char)) {
           cell.state = 'flipped-yellow'; // Correct letter in the wrong position
         } else {
@@ -76,21 +113,14 @@ function WordleGame() {
         setGrid([...gridCopy]); // Update the grid after coloring each cell
   
         // Check if all cells in the current row have correct letters
-        // const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
-        const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
-        if (allCorrect) {
-          // setGameWon(true); // Set gameWon to true if all letters are correct
+        if (correctRef.current === 5) {
           toast.success('Congratulations! You won!');
           inputRef.current.blur();
         }
-        // if (correct===5) {
-        //   // setGameWon(true); // Set gameWon to true if all letters are correct
-        //   toast.success('Congratulations! You won!');
-        //   inputRef.current.blur();
-        // }
       }, 150 * (i + 1));
     }
   };
+  
   
   const updateCells = (value) => {
     const gridCopy = [...grid];
