@@ -3,6 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dictArray from "./dictionary";
 import { TopWordle } from './TopPanel';
+
+import {Keyboard, colorButtonByCellState} from './keyboard'; // Import the Keyboard component
+
 // import { getRandomWord } from "./dictionary";
 
 // const dailyWord = getRandomWord().toUpperCase();
@@ -14,8 +17,6 @@ function WordleGame() {
   const [currentRow, setCurrentRow] = useState(0);
   const [hiddenInput, setHiddenInput] = useState('');
   const [grid, setGrid] = useState(Array.from({ length: 6 }, () => Array.from({ length: 5 }, () => ({ content: '', state: '' }))));
-  // const [gameWon, setGameWon] = useState(false);
-  // let correct = 0;
 
   const correctRef = useRef(0);
 
@@ -35,7 +36,6 @@ function WordleGame() {
     e.preventDefault();
     const wordExists = await checkWordInDictionary(hiddenInput);
     if (!wordExists) {
-      // console.log('Word not found in dictionary.');
       toast.error('Not a valid word'); 
       return;
     }
@@ -60,67 +60,47 @@ function WordleGame() {
       return false;
     }
   };
-  
-  // const updateCellColors = (word) => {
-  //   const gridCopy = [...grid];
-  //   for (let i = 0; i < word.length; i++) {
-  //     setTimeout(() => {
-  //       const char = word[i];
-  //       const cell = gridCopy[currentRow][i];
-  //       // let correct = 0;
-        
-  //       if (dailyWord[i] === char) {
-  //         cell.state = 'flipped-green'; // Correct letter in the correct position
-  //         correct++;
-  //       } else if (dailyWord.includes(char)) {
-  //         cell.state = 'flipped-yellow'; // Correct letter in the wrong position
-  //       } else {
-  //         cell.state = 'flipped-red'; // Incorrect letter
-  //       }
-  //       setGrid([...gridCopy]); // Update the grid after coloring each cell
-  
-  //       // Check if all cells in the current row have correct letters
-  //       // const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
-  //       const allCorrect = gridCopy[currentRow].every(cell => cell.state === 'flipped-green');
-  //       if (allCorrect) {
-  //         // setGameWon(true); // Set gameWon to true if all letters are correct
-  //         toast.success('Congratulations! You won!');
-  //         inputRef.current.blur();
-  //       }
-  //       // if (correct===5) {
-  //       //   // setGameWon(true); // Set gameWon to true if all letters are correct
-  //       //   toast.success('Congratulations! You won!');
-  //       //   inputRef.current.blur();
-  //       // }
-  //     }, 150 * (i + 1));
-  //   }
-  // };
 
   const updateCellColors = (word, correctRef) => {
     const gridCopy = [...grid];
+    const buttonsToColor = {}; // Object to store buttons to color
+    
     for (let i = 0; i < word.length; i++) {
-      setTimeout(() => {
-        const char = word[i];
-        const cell = gridCopy[currentRow][i];
+      const char = word[i];
+      const cell = gridCopy[currentRow][i];
   
+      setTimeout(() => { // Add timeout for cell coloring
         if (dailyWord[i] === char) {
-          cell.state = 'flipped-green'; // Correct letter in the correct position
-          correctRef.current++; // Increment correct count using correctRef.current
+          cell.state = 'flipped-green'; 
+          correctRef.current++; 
         } else if (dailyWord.includes(char)) {
-          cell.state = 'flipped-yellow'; // Correct letter in the wrong position
+          cell.state = 'flipped-yellow'; 
         } else {
-          cell.state = 'flipped-red'; // Incorrect letter
+          cell.state = 'flipped-red'; 
         }
-        setGrid([...gridCopy]); // Update the grid after coloring each cell
   
-        // Check if all cells in the current row have correct letters
+        const buttonId = `button-${char.toLowerCase()}`;
+        buttonsToColor[buttonId] = cell.state; // Store button ID and corresponding state
+  
+        setGrid([...gridCopy]); // Update grid after coloring cell
+    
         if (correctRef.current === 5) {
           toast.success('Congratulations! You won!');
           inputRef.current.blur();
         }
-      }, 150 * (i + 1));
+      }, 150 * (i + 1)); // Timeout for cell coloring
     }
+  
+    // Color buttons after all cells are processed
+    setTimeout(() => {
+      Object.keys(buttonsToColor).forEach(buttonId => {
+        const state = buttonsToColor[buttonId];
+        colorButtonByCellState(buttonId, state);
+      });
+    }, 150 * word.length + 500); // Timeout for coloring buttons after all cells are processed
   };
+  
+  
   
   
   const updateCells = (value) => {
@@ -148,12 +128,8 @@ function WordleGame() {
     setHiddenInput('');
   };
   const handleInputBlur = () => {
-    // if (!gameWon) {
-    //   // Prevent the input from losing focus if the game is not won
-    //   inputRef.current.focus();
-    // }
-    if (!correctRef.current===5) {
-      // Prevent the input from losing focus if the game is not won
+    if (correctRef.current !==5) {
+
       inputRef.current.focus();
     }
   };
@@ -165,13 +141,13 @@ function WordleGame() {
         <ToastContainer
           position="top-center"
           autoClose={3000}
-          hideProgressBar={true} // Hide the cooldown bar
-          closeButton={false} // Disable the close button
+          hideProgressBar={true} 
+          closeButton={false} 
         />
         <form onSubmit={handleSubmit}>
           <input className='hdn-input-wordle' type="text" value={hiddenInput} onChange={handleInputChange} maxLength="5" autoFocus onBlur={handleInputBlur} ref={inputRef}  />
         </form>
-
+      
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="row">
             {row.map(({ content, state }, cellIndex) => (
@@ -188,6 +164,14 @@ function WordleGame() {
             ))}
           </div>
         ))}
+
+        <Keyboard
+          handleSubmit={handleSubmit}
+          setHiddenInput={setHiddenInput}
+          hiddenInput={hiddenInput}
+          updateCells={updateCells}
+        />
+
       </div>
     </div>
 

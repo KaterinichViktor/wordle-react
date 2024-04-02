@@ -62,4 +62,51 @@ a{
   height: 200px;
 }
 
+.keyboard-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: 100px;
+}
+
+.keyboard-button{
+  width: 60px;
+  height: 60px;
+  background-color: #CBD3DF;
+  margin: 0 5px 5px 0;
+  border: none;
+  border-radius: 5px;
+
+  font-size: 20px; 
+}
+.keyboard-button:hover{
+  cursor: pointer;
+}
+.delete-button,
+.enter-button{
+  height: 60px;
+  width: 100px;
+  margin: 0 5px 5px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #CBD3DF;
+
+  font-size: 20px;
+}
+.delete-button:hover,
+.enter-button:hover{
+  cursor: pointer;
+}
+
+
+.keyboard-button.red{
+  background-color: #A2A2A2;
+}
+.keyboard-button.green{
+  background-color: rgba(3, 180, 3, 0.87);
+}
+.keyboard-button.yellow{
+  background-color: rgb(255, 208, 0);
+}
 
