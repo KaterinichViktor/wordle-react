@@ -35,7 +35,8 @@ function WordleGame() {
     e.preventDefault();
     const wordExists = await checkWordInDictionary(hiddenInput);
     if (!wordExists) {
-      console.log('Word not found in dictionary.');
+      // console.log('Word not found in dictionary.');
+      toast.error('Not a valid word'); 
       return;
     }
     updateCellColors(hiddenInput, correctRef);
